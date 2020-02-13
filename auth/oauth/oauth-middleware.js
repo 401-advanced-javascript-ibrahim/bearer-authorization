@@ -53,6 +53,6 @@ async function getUser(remoteUser) {
     };
     let newUser = new Users(userRecord);
     let user = await newUser.save();
-    let token = await newUser.tokenGenerator(user);
+    let token = await newUser.signupTokenGenerator(user);
     return [user, token]
 };

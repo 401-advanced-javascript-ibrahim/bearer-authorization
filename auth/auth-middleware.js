@@ -19,7 +19,7 @@ module.exports = (req, res, next) => {
   users.authenticater(auth)
     .then(validUser => {
       console.log('validSUser', validUser);
-      req.token = users.tokenGenerator(validUser);
+      req.token = users.signinTokenGenerator(validUser);
       console.log('here');
       next();
     })

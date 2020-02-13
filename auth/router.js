@@ -14,7 +14,7 @@ const bearerMiddleware = require('./bearer/bearer-middleware.js');
 
 router.post('/signup', signup);
 router.post('/signin', authMiddleware, signin);
-router.get('/user', getUser);
+router.get('/userList', getUser);
 router.get('/oauth', oauthMiddleware, oauth);
 router.get('/user', bearerMiddleware, bearer);
 
@@ -24,7 +24,7 @@ function signup(req, res, next) {
   user.save()
     .then(user => {
       console.log('asdsad', user);
-      req.token = user.tokenGenerator(user);
+      req.token = user.signupTokenGenerator(user);
       req.user = user;
       res.status(200).send(req.token);
     })
@@ -48,6 +48,7 @@ function oauth(req, res, next) {
 }
 
 function bearer(req, res, next) {
+  console.log('route',req.user);
   res.status(200).json(req.user);
 }
 

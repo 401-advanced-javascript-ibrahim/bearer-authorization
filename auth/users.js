@@ -36,9 +36,19 @@ users.methods.passwordComparator = function (pass) {
         });
 };
 
-users.methods.tokenGenerator = function (user) {
+users.methods.signupTokenGenerator = function (user) {
     let token = {
         id: user._id,
+        username: user.username,
+        password: user.password
+    };
+    return jwt.sign(token, SECRET);
+};
+users.statics.signinTokenGenerator = function (user) {
+    let token = {
+        id: user._id,
+        username: user.username,
+        password: user.password
     };
     return jwt.sign(token, SECRET);
 };
@@ -51,9 +61,8 @@ users.statics.list = async function () {
 users.statics.authenticateToken = async function (token) {
     try {
         let tokenObject = jwt.verify(token, SECRET);
-
         if (tokenObject.username) {
-            return Promise.resolve(tokenObject);
+            return Promise.resolve(tokenObject.username);
         } else {
             return Promise.reject();
         }
