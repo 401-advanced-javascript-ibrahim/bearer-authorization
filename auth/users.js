@@ -50,7 +50,7 @@ users.statics.list = async function () {
 
 users.statics.authenticateToken = async function (token) {
     try {
-        let tokenObject = jwt.verify(token, process.env.SECRET);
+        let tokenObject = jwt.verify(token, SECRET);
 
         if (tokenObject.username) {
             return Promise.resolve(tokenObject);
